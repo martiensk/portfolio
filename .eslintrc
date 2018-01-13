@@ -115,10 +115,6 @@
         "no-debugger": "warn",
         "no-alert": "warn",
         "dot-notation": "warn",
-        "no-magic-numbers": ["warn", {
-            "ignoreArrayIndexes": true,
-            "enforceConst": true
-        }],
         "no-warning-comments": "warn",
         "vars-on-top": "warn",
         "multiline-comment-style": "warn",
@@ -156,6 +152,7 @@
         "classes/constructor": "error",
         "classes/super": "error",
         "classes/style": "error",
-        "no-new": "off"
+        "no-new": "off",
+        "no-magic-numbers": "off"
     }
 }

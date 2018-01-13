@@ -175,7 +175,7 @@ function getPlugins(env, ssr) {
             'fix': env === 'development' ? false : true
         }),
         new HtmlWebpackPlugin({
-            title: 'Test',
+            title: 'Coming Soon',
             filename: 'views/index.html',
             template: './views/index.html',
             inject: false,
