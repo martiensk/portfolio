@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h1>{{ greeting }}<span class="b">{{transparentDot}}</span>{{dot}}{{char}}</h1>
+    <div :style="animation">
+        <h1>{{ greeting }}{{dot}}<span class="b">{{transparentDot}}</span>{{char}}</h1>
     </div>
 </template>
 
@@ -14,12 +14,13 @@
          */
         data () {
             return {
-                greeting: 'Coming Back',
+                greeting: 'Coming Soon',
                 dot: '',
                 transparentDot: '...',
                 char: '-',
                 a: 0,
-                b: 0
+                b: 0,
+                animation: 'animation: text-shadow 1.6s infinite, glitch 1s;'
             };
         },
     
@@ -63,14 +64,52 @@
                     break;
                 }
             }, 800);
+            this.glitch();
+        },
+
+        methods: {
+
+            /**
+             * @description Create a CRT glitch effect
+             * @returns {void}
+             */
+            glitch () {
+                const seconds = Math.random() * 5;
+                this.animation = this.animation === null ? 'animation: text-shadow 1.6s infinite, glitch 1s, flicker 0.5s infinite;' : null;
+    
+                setTimeout(() => {
+                    this.glitch();
+                }, seconds * 1000);
+            }
         }
     };
 </script>
 
 <style lang="scss" scoped>
-    $color: #0f0;
+    @import 'styles/responsive.scss';
 
-    h1 {
-        color: $color;
+    div {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
     }
+    h1 {
+        font-size: 125px;
+        font-family: 'Exo 2';
+    }
+
+    @media (min-width: 480px) {
+        h1 {
+            font-size: 40px;
+        }
+    }
+
+    /* @include tablet {
+        h1 {
+            font-size: 40px;
+        }
+    } */
 </style>

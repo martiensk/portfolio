@@ -6,7 +6,7 @@ module.exports = function(data) {
             'postcss-discard-duplicates': {},
             'postcss-combine-duplicated-selectors': {},
             'postcss-merge-rules': {},
-            'postcss-merge-selectors': {}
+            //'postcss-merge-selectors': {}
         }
     }
 };

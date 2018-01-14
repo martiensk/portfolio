@@ -152,7 +152,6 @@
         "classes/constructor": "error",
         "classes/super": "error",
         "classes/style": "error",
-        "no-new": "off",
-        "no-magic-numbers": "off"
+        "no-new": "off"
     }
 }

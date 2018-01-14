@@ -2,6 +2,7 @@ const conf = require('./webpack.shared');
 const path = require('path');
 const vue = require('vue');
 const nodeExternals = require('webpack-node-externals');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 
 let base = conf('production', true);
@@ -18,6 +19,7 @@ const fin = Object.assign(base, {
         whitelist: '/\.css$/'
     }),
     plugins: [
+        new CleanWebpackPlugin(['dist']),
         new VueSSRServerPlugin()
     ]
 });
