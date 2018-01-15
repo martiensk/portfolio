@@ -88,6 +88,26 @@
 <style lang="scss" scoped>
     @import 'styles/responsive.scss';
 
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    h1 {
+        font-family: 'Exo 2', 'Courier', sans-serif;
+        font-size: 125px;
+    }
+
+    @media (max-width: 480px) {
+
+        h1 {
+            font-size: 40px;
+        }
+    }
+
     /* @include tablet {
         h1 {
             font-size: 40px;
