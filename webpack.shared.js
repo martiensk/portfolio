@@ -137,7 +137,10 @@ const getRules = (env) => {
             loader: criticalCSS.extract({
                 use: [
                     {
-                        loader: 'css-loader'
+                        loader: 'css-loader', options: { 
+                            minimize: true,
+                            importLoaders: 1 
+                        }
                     },
                     {
                         loader: 'postcss-loader'
@@ -151,7 +154,10 @@ const getRules = (env) => {
             loader: mainCSS.extract({
                 use: [
                     {
-                        loader: 'css-loader'
+                        loader: 'css-loader', options: { 
+                            minimize: true,
+                            importLoaders: 1 
+                        }
                     },
                     {
                         loader: 'postcss-loader'
@@ -200,11 +206,19 @@ function getPlugins(env, ssr) {
         }));
         pluginPack.push(criticalCSS);
         pluginPack.push(mainCSS);
-        pluginPack.push(new OptimizeCssAssetsPlugin({
+        /* pluginPack.push(new OptimizeCssAssetsPlugin({
             cssProcessor: require('cssnano'),
-            cssProcessorOptions: { discardComments: { removeAll: true } },
+            cssProcessorOptions: {
+                preset:
+                    ['default',
+                        { 
+                            discardComments: { removeAll: true },
+                            discardUnused: {fontFace: false}
+                        }
+                    ]
+            },
             canPrint: true
-        }));
+        })); */
         pluginPack.push(new StyleExtHtmlWebpackPlugin('css/critical.css'));
         !ssr && pluginPack.push(new BundleAnalyzerPlugin());
     }
