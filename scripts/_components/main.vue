@@ -1,5 +1,5 @@
 <template>
-    <div :style="animation">
+    <div>
         <h1>{{ greeting }}{{dot}}<span class="b">{{transparentDot}}</span>{{char}}</h1>
     </div>
 </template>
@@ -97,20 +97,16 @@
     }
 
     h1 {
+        position: relative;
+        display: block;
+        flex-grow: 0;
         font-family: 'Exo 2', 'Courier', sans-serif;
-        font-size: 125px;
-    }
+        font-size: 40px;
+        color: #0f0;
+        user-select: none;
 
-    @media (max-width: 480px) {
-
-        h1 {
+        /* @include tablet {
             font-size: 40px;
-        }
+        } */
     }
-
-    /* @include tablet {
-        h1 {
-            font-size: 40px;
-        }
-    } */
 </style>

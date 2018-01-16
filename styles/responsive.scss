@@ -1,3 +1,4 @@
+/* stylelint-disable */
 $_mobile: 375px;
 $_tablet: 475px;
 $_desktop: 1000px;
@@ -12,7 +13,7 @@ $_desktop: 1000px;
 
 @mixin tablet {
 
-    @media (max-width: #{$_tablet}) {
+    @media (min-width: #{$_tablet}) {
 
         @content;
     }

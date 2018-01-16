@@ -17,8 +17,9 @@
     }
 }
 
+$_steps: 20;
+
 @keyframes flicker {
-    $_steps: 20;
 
     @for $i from 0 through $_steps {
 
@@ -29,104 +30,16 @@
 }
 
 @keyframes text-shadow {
-    $_steps: 20;
 
     @for $i from 0 through $_steps {
         
         #{percentage($i * (1 / $_steps))} {
-            $blue: random() * 5;
-            $red: random() * -5;
+            $blue: random() * 6;
+            $red: random() * -6;
             text-shadow: #{$blue}px 0 1px rgba(0, 30, 255, 0.5), #{$red}px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
         }
     }
 }
-
-/* @keyframes text-shadow {
-
-    0% {
-        text-shadow: 0.438px 0 1px rgba(0, 30, 255, 0.5), -0.438px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    5% {
-        text-shadow: 2.792px 0 1px rgba(0, 30, 255, 0.5), -2.792px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    10% {
-        text-shadow: 0.029px 0 1px rgba(0, 30, 255, 0.5), -0.029px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    15% {
-        text-shadow: 0.402px 0 1px rgba(0, 30, 255, 0.5), -0.402px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    20% {
-        text-shadow: 3.479px 0 1px rgba(0, 30, 255, 0.5), -3.479px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    25% {
-        text-shadow: 1.612px 0 1px rgba(0, 30, 255, 0.5), -1.612px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    30% {
-        text-shadow: 0.701px 0 1px rgba(0, 30, 255, 0.5), -0.701px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    35% {
-        text-shadow: 3.896px 0 1px rgba(0, 30, 255, 0.5), -3.896px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    40% {
-        text-shadow: 3.87px 0 1px rgba(0, 30, 255, 0.5), -3.87px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    45% {
-        text-shadow: 2.231px 0 1px rgba(0, 30, 255, 0.5), -2.231px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    50% {
-        text-shadow: 0.08px 0 1px rgba(0, 30, 255, 0.5), -0.08px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    55% {
-        text-shadow: 2.375px 0 1px rgba(0, 30, 255, 0.5), -2.375px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    60% {
-        text-shadow: 2.202px 0 1px rgba(0, 30, 255, 0.5), -2.202px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    65% {
-        text-shadow: 2.863px 0 1px rgba(0, 30, 255, 0.5), -2.863px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    70% {
-        text-shadow: 0.488px 0 1px rgba(0, 30, 255, 0.5), -0.488px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    75% {
-        text-shadow: 1.894px 0 1px rgba(0, 30, 255, 0.5), -1.894px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    80% {
-        text-shadow: 0.083px 0 1px rgba(0, 30, 255, 0.5), -0.083px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    85% {
-        text-shadow: 0.097px 0 1px rgba(0, 30, 255, 0.5), -0.097px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    90% {
-        text-shadow: 3.443px 0 1px rgba(0, 30, 255, 0.5), -3.443px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    95% {
-        text-shadow: 2.184px 0 1px rgba(0, 30, 255, 0.5), -2.184px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-
-    100% {
-        text-shadow: 2.62px 0 1px rgba(0, 30, 255, 0.5), -2.62px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
-    }
-} */
 
 @keyframes glitch {
     
