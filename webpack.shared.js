@@ -184,6 +184,7 @@ function getPlugins(env, ssr) {
             title: 'Coming Soon',
             filename: 'views/index.html',
             template: './views/index.html',
+            favicon: 'favicon.ico',
             inject: false,
             minify: {
                 collapseBooleanAttributes: true,

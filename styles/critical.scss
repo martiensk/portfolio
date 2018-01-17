@@ -1,5 +1,9 @@
 @import 'styles/crtAnimations.scss';
 
+* {
+    box-sizing: border-box;
+}
+
 html, body {
     width: 100%;
     height: 100%;
@@ -15,7 +19,6 @@ body {
     justify-content: center;
     font-family: 'Courier', sans-serif;
     color: #14fdce;
-    // color: #0f0;
     background-color: darken(#031e11, 4%);
 
     > div {

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :style="animation">
         <h1>{{ greeting }}{{dot}}<span class="b">{{transparentDot}}</span>{{char}}</h1>
     </div>
 </template>
@@ -20,7 +20,7 @@
                 char: '-',
                 a: 0,
                 b: 0,
-                animation: 'animation: text-shadow 1.6s infinite, glitch 1s;'
+                animation: 'animation: glitch 1s;'
             };
         },
     
@@ -75,7 +75,8 @@
              */
             glitch () {
                 const seconds = Math.random() * 5;
-                this.animation = this.animation === null ? 'animation: text-shadow 1.6s infinite, glitch 1s, flicker 0.5s infinite;' : null;
+                const chance = Math.round(Math.random() * 3);
+                this.animation = this.animation === null ? chance === 1 ? 'animation: glitch 1s, flicker 1s infinite' : 'animation: glitch 1s' : null;
     
                 setTimeout(() => {
                     this.glitch();
@@ -104,9 +105,6 @@
         font-size: 40px;
         color: #0f0;
         user-select: none;
-
-        /* @include tablet {
-            font-size: 40px;
-        } */
+        animation: text-shadow 1.6s infinite;
     }
 </style>
