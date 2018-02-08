@@ -5,4 +5,11 @@
     src: local('Exo 2'), local('Exo2-Regular'), url('../fonts/exo2-webfont.woff2') format('woff2'), url('../fonts/exo2-webfont.woff') format('woff');
 }
 
+@font-face {
+    font-family: 'Fixedsys';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Fixedsys'), url('../fonts/FSEX300.woff') format('woff');
+}
+
 // @import url('https://fonts.googleapis.com/css?family=Exo+2|Inconsolata|Source+Code+Pro');
