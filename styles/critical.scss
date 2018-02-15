@@ -22,7 +22,12 @@ body {
     background-color: darken(#031e11, 4%);
 
     > div {
-        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+
         @extend %crt;
     }
 }
@@ -35,4 +40,11 @@ span:not('.b') {
 .b {
     color: transparent;
     text-shadow: none;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 10px;
 }
