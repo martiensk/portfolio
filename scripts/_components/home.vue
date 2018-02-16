@@ -4,12 +4,13 @@
             <router-link to="/">Home</router-link>
             <router-link to="/loading">Terminal</router-link>
         </nav>
-        <textarea :rows="selected.rows" :columns="selected.columns" v-model="selected.text" disabled></textarea>
+        <textarea :rows="selected.rows" :columns="selected.columns" v-model="selected.text"></textarea>
     </div>
 </template>
 
 <script>
-    import {full} from '../ascii';
+    import {mapGetters} from 'vuex';
+    import {full, mid, small} from '../ascii';
 
     export default {
         name: 'Home',
@@ -18,8 +19,20 @@
          * @description: Created the Vue data object
          * @returns {void}
          */
-        data () {
-            return {selected: full};
+        computed: {
+            ...mapGetters([
+                'media'
+            ]),
+            selected () {
+                switch (this.media) {
+                case 'mobile':
+                    return small;
+                case 'tablet':
+                    return mid;
+                default:
+                    return full;
+                }
+            }
         }
     };
 </script>
@@ -35,6 +48,7 @@
         resize: none;
         user-select: none;
         cursor: default;
+        pointer-events: none;
         animation: text-shadow 1s infinite;
     }
 </style>

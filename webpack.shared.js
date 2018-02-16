@@ -61,7 +61,7 @@ const getRules = (env) => {
             loader: 'vue-loader',
             options: {
                 loaders: {
-                    js: 'babel-loader?presets[]=env'
+                    js: 'babel-loader?presets[]=env&plugins[]=transform-object-rest-spread'
                 }
             }
         },
@@ -72,6 +72,7 @@ const getRules = (env) => {
                 loader: 'babel-loader',
                 options: {
                     presets: ['env'],
+                    plugins: ['transform-object-rest-spread', 'transform-object-assign']
                 }
             }
         },
