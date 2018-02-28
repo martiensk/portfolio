@@ -7,6 +7,9 @@ module.exports = function(data) {
             'postcss-combine-duplicated-selectors': {},
             'postcss-merge-rules': {},
             //'postcss-merge-selectors': {}
+            'css-mqpacker': {
+                sort: true
+            }
         }
     }
 };

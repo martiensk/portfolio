@@ -1,8 +1,7 @@
 {
     "syntax": "scss",
     "extends": [
-        "stylelint-config-recommended-scss",
-        "stylelint-config-recess-order"
+        "stylelint-config-recommended-scss"
     ],
     "plugins": [
         "stylelint-order"
@@ -130,12 +129,6 @@
         "scss/declaration-nested-properties-no-divided-groups": true,
         "scss/operator-no-newline-before": true,
         "scss/operator-no-unspaced": true,
-        "scss/selector-no-redundant-nesting-selector": true,
-        "order/order": [
-            "dollar-variables",
-            "declarations",
-            "at-rules",
-            "rules"
-        ]
+        "scss/selector-no-redundant-nesting-selector": true
     }
 }

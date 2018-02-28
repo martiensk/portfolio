@@ -6,36 +6,38 @@
 }
 
 html, body {
-    width: 100%;
+    font-size: 16px;
     height: 100%;
-    padding: 0;
     margin: 0;
     overflow: hidden;
-    font-size: 16px;
+    padding: 0;
+    width: 100%;
 }
 
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Courier', sans-serif;
-    color: #14fdce;
+    // align-items: center;
     background-color: darken(#031e11, 4%);
+    color: #14fdce;
+    // display: flex;
+    // flex-direction: column;
+    font-family: 'Courier', sans-serif;
+    // justify-content: center;
 
     > div {
-        display: flex;
         align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
         justify-content: center;
         width: 100%;
-        height: 100%;
 
         @extend %crt;
     }
 }
 
 span:not('.b') {
-    position: absolute;
     left: 100%;
+    position: absolute;
 }
 
 .b {
@@ -44,8 +46,8 @@ span:not('.b') {
 }
 
 nav {
-    position: fixed;
-    top: 0;
     left: 0;
     padding: 10px;
+    position: fixed;
+    top: 0;
 }

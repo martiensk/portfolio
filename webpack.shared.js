@@ -62,6 +62,9 @@ const getRules = (env) => {
             options: {
                 loaders: {
                     js: 'babel-loader?presets[]=env&plugins[]=transform-object-rest-spread'
+                },
+                cssModules: {
+                    minimize: env === 'development' ? false : true
                 }
             }
         },
@@ -179,7 +182,18 @@ function getPlugins(env, ssr) {
             }
         }),
         new StyleLintPlugin({
-            'fix': env === 'development' ? false : true
+            'fix': env === 'development' ? false : true,
+            configOverrides: {
+                rules: env === 'development' ? {} : {
+                    "order/order": [
+                        "dollar-variables",
+                        "declarations",
+                        "at-rules",
+                        "rules"
+                    ],
+                    "order/properties-alphabetical-order": true
+                }
+            }
         }),
         new HtmlWebpackPlugin({
             title: 'Coming Soon',

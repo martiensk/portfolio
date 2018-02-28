@@ -1,6 +1,6 @@
 <template>
     <transition name="glitch" :duration="{leave: 0}">
-        <router-view></router-view>
+        <router-view nav-to="nextUrl"></router-view>
     </transition>
 </template>
 
@@ -13,6 +13,9 @@
         components: {
             Home,
             Terminal
+        },
+        data () {
+            return {nextUrl: ''};
         }
     };
 </script>

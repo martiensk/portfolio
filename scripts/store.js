@@ -7,6 +7,13 @@ export default () => {
     return new Vuex.Store({
         state: {media: 'none'},
         mutations: {
+
+            /**
+             * Sets the device media parameter based on the screen size.
+             * @param {object} state - The Vuex state
+             * @param {number} mediaWidth - The width of the browser window.
+             * @returns {void}
+             */
             setmedia (state, mediaWidth) {
                 if (Number(mediaWidth) < 475) {
                     state.media = 'mobile';

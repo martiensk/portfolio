@@ -5,7 +5,6 @@ import Store from './store';
 import Main from './_components/main';
 import '../styles/critical.scss';
 import '../styles/main.scss';
-import {mapGetters} from 'vuex';
 
 Vue.use(VueRouter);
 
@@ -17,6 +16,11 @@ const app = new Vue({
     store,
     router,
     methods: {
+
+        /**
+         * Sends the width of the browser window to the Vuex store where the media string is updated accordingly.
+         * @returns {void}
+         */
         setMediaWidth () {
             this.$store.commit('setmedia', window.innerWidth);
         }

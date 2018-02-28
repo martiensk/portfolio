@@ -8,6 +8,7 @@
         "browser": true
     },
     "plugins": [
+        "require-jsdoc-except",
         "classes",
         "html"
     ],
@@ -120,7 +121,7 @@
         "multiline-comment-style": "warn",
         "no-var": "warn",
         "prefer-rest-params": "warn",
-        "require-jsdoc": [
+        "require-jsdoc-except/require-jsdoc": [
             "warn",
             {
                 "require": {
@@ -129,7 +130,8 @@
                     "ClassDeclaration": false,
                     "ArrowFunctionExpression": true,
                     "FunctionExpression": true
-                }
+                },
+                "ignore": ["data", "mounted", "created", "beforeDestroy", "beforeMount"]
             }
         ],
         "valid-jsdoc": [

@@ -5,6 +5,8 @@
             <router-link to="/loading">Terminal</router-link>
         </nav>
         <textarea :rows="selected.rows" :columns="selected.columns" v-model="selected.text"></textarea>
+        <h1>I put symbols in the glow box.</h1>
+        <a click.prevent href="#">TL;DR version</a>
     </div>
 </template>
 
@@ -14,15 +16,15 @@
 
     export default {
         name: 'Home',
-    
-        /**
-         * @description: Created the Vue data object
-         * @returns {void}
-         */
         computed: {
             ...mapGetters([
                 'media'
             ]),
+
+            /**
+             * Returns ASCII art based on the screen media.
+             * @returns {void}
+             */
             selected () {
                 switch (this.media) {
                 case 'mobile':
@@ -37,10 +39,18 @@
     };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" module="home" scoped>
+    @import '../../styles/responsive.scss';
+
+    :global {
+        textarea {
+            animation: text-shadow 1s infinite;
+        }
+    }
+
     textarea {
         display: block;
-        width: 380px;
+        width: 130px;
         overflow: hidden;
         background: transparent;
         color: inherit;
@@ -49,6 +59,17 @@
         user-select: none;
         cursor: default;
         pointer-events: none;
-        animation: text-shadow 1s infinite;
     }
+
+    h1 {
+        font-size: 16px;
+        margin: 0;
+    }
+
+    @include tablet {
+        textarea {
+            width: 380px;
+        }
+    }
+
 </style>
