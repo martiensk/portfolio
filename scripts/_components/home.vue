@@ -1,21 +1,23 @@
 <template>
     <div>
-        <nav>
-            <router-link to="/">Home</router-link>
-            <router-link to="/loading">Terminal</router-link>
-        </nav>
         <textarea :rows="selected.rows" :columns="selected.columns" v-model="selected.text"></textarea>
         <h1>I put symbols in the glow box.</h1>
-        <a click.prevent href="#">TL;DR version</a>
+        <a @click.prevent="navigate('/')" href="/">TL;DR version</a>
     </div>
 </template>
 
 <script>
+    /**
+     * @namespace Home
+     */
+
     import {mapGetters} from 'vuex';
     import {full, mid, small} from '../ascii';
+    import Mixin from '../mixins';
 
     export default {
         name: 'Home',
+        mixins: [Mixin],
         computed: {
             ...mapGetters([
                 'media'

@@ -1,6 +1,6 @@
 <template>
     <transition name="glitch" :duration="{leave: 0}">
-        <router-view nav-to="nextUrl"></router-view>
+        <router-view :nav-to="nextUrl" @nav="navigate"></router-view>
     </transition>
 </template>
 
@@ -16,6 +16,12 @@
         },
         data () {
             return {nextUrl: ''};
+        },
+        methods: {
+            navigate (path) {
+                this.nextUrl = path;
+                this.$router.push('/loading');
+            }
         }
     };
 </script>

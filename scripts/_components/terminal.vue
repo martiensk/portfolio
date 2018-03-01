@@ -1,9 +1,5 @@
 <template>
     <div>
-        <nav>
-            <router-link to="/">Home</router-link>
-            <router-link to="/loading">Terminal</router-link>
-        </nav>
         <h1 >
             Swap Test
         </h1>
@@ -11,5 +7,19 @@
 </template>
 
 <script>
-    export default {name: 'Terminal'};
+    export default {
+        name: 'Terminal',
+        props: {
+            navTo: {
+                type: String,
+                required: true
+            }
+        },
+        mounted () {
+            const component = this;
+            setTimeout(() => {
+                component.$router.push(component.navTo);
+            }, 1000);
+        }
+    };
 </script>
