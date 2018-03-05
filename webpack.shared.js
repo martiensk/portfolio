@@ -37,7 +37,10 @@ module.exports = (env, ssr = false) => {
             rules: getRules(env)
         },
         resolve: {
-            extensions: ['.js', '.vue', '.scss']
+            extensions: ['.js', '.vue', '.scss'],
+            alias: {
+                TextPlugin: path.resolve(__dirname, './scripts/vendor/TextPlugin.min.js')
+            }
         },
         plugins: getPlugins(env, ssr)
     }
@@ -48,7 +51,6 @@ const getRules = (env) => {
         {
             enforce: "pre",
             test: /\.(js|vue)$/,
-            exclude: /node_modules/,
             loader: "eslint-loader",
             options: {
                 formatter: require('eslint-friendly-formatter'),

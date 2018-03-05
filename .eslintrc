@@ -131,7 +131,7 @@
                     "ArrowFunctionExpression": true,
                     "FunctionExpression": true
                 },
-                "ignore": ["data", "mounted", "created", "beforeDestroy", "beforeMount"]
+                "ignore": ["data", "mounted", "created", "beforeDestroy", "beforeMount", "onComplete"]
             }
         ],
         "valid-jsdoc": [

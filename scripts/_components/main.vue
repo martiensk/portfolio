@@ -18,6 +18,12 @@
             return {nextUrl: ''};
         },
         methods: {
+
+            /**
+             * Navigates to /laoding in order to display terminal scripts.
+             * @param {string} path The URL that the /loading component should navigate to.
+             * @returns {void}
+             */
             navigate (path) {
                 this.nextUrl = path;
                 this.$router.push('/loading');
