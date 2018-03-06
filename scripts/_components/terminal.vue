@@ -38,7 +38,8 @@
                     `${this.hash()}`,
                     `${this.hash()}`,
                     `${this.hash()}`,
-                    'initialization complete'
+                    'initialization complete',
+                    ''
                 ],
                 display: [],
                 counter: 0,

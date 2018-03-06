@@ -149,7 +149,6 @@
                 }
             }
         ],
-        "classes/space": ["error"],
         "classes/name": ["error", "class", "method"],
         "classes/constructor": "error",
         "classes/super": "error",
