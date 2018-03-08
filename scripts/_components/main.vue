@@ -1,6 +1,6 @@
 <template>
     <transition name="glitch" :duration="{leave: 0}">
-        <router-view :nav-to="nextUrl" @nav="navigate"></router-view>
+        <router-view :nav-to="nextUrl" @nav="navigate" @play="play" @stop="stop"></router-view>
     </transition>
 </template>
 
@@ -18,13 +18,18 @@
             Terminal
         },
         data () {
-            return {nextUrl: ''};
+            return {
+                nextUrl: '',
+                popCounter: 0,
+                lastPop: null
+            };
         },
         computed: {
             audio () {
                 return audio;
             }
         },
+        audio,
         methods: {
 
             /**
@@ -41,9 +46,27 @@
                 if (!this.audio.ready) {
                     window.requestAnimationFrame(this.ambience);
                 } else {
-                    this.audio.play('hdd', 0.5);
-                    this.audio.play('record', 0.25);
+                    this.play('humming', 0.8);
+                    this.lastPop = new Date().getTime();
+                    this.audio.repeat('record', false);
+                    this.makePop();
                 }
+            },
+            makePop () {
+                const time = new Date().getTime();
+                const diff = Math.abs(time - this.lastPop);
+                if (diff > this.popCounter) {
+                    // this.play('record', 0.5);
+                    this.popCounter = (Math.random() * 5000) + 500;
+                    this.lastPop = time;
+                }
+                window.requestAnimationFrame(this.makePop);
+            },
+            play (clip, volume = 1) {
+                this.audio.play(clip, volume);
+            },
+            stop (clip) {
+                this.audio.pause(clip);
             }
         },
         mounted () {

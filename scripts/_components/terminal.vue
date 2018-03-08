@@ -48,6 +48,9 @@
         },
         mounted () {
             this.populateDisplay();
+            setTimeout(() => {
+                this.$emit('play', 'terminal', 0.5);
+            }, 0.4);
         },
         methods: {
 
@@ -116,6 +119,7 @@
             this.counter = 0;
             this.display = [];
             this.lastUpdate = null;
+            this.$emit('stop', 'terminal');
         }
     };
 </script>

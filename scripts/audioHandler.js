@@ -1,13 +1,15 @@
-import '../audio/hdd.mp3';
+import '../audio/film.mp3';
 import '../audio/record.mp3';
 import '../audio/typing.mp3';
 import '../audio/terminal.mp3';
+import '../audio/humming.mp3';
 
 export default class AudioHandler {
     constructor () {
         this.audioFiles = {
-            hdd: './audio/hdd.mp3',
+            film: './audio/film.mp3',
             record: './audio/record.mp3',
+            humming: './audio/humming.mp3',
             typing: './audio/typing.mp3',
             terminal: './audio/terminal.mp3'
         };
@@ -28,6 +30,7 @@ export default class AudioHandler {
         this.fileCounter += 1;
 
         const audio = new Audio();
+        audio.loop = true;
         const source = document.createElement('source');
         source.type = 'audio/mpeg';
         source.src = url;
@@ -39,12 +42,20 @@ export default class AudioHandler {
         }
     }
 
-    play (clip, volume = 1) {
-        this.audioFiles[clip].volume = volume;
-        this.audioFiles[clip].play();
+    play (clip, volume) {
+        if (typeof this.audioFiles[clip] !== 'undefined') {
+            this.audioFiles[clip].volume = volume;
+            this.audioFiles[clip].play();
+        }
     }
 
     pause (clip) {
-        this.audioFiles[clip].pause();
+        typeof this.audioFiles[clip] !== 'undefined' && this.audioFiles[clip].pause();
+    }
+
+    repeat (clip, repeat) {
+        if (typeof this.audioFiles[clip] !== 'undefined') {
+            this.audioFiles[clip].loop = repeat;
+        }
     }
 }
