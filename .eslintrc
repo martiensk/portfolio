@@ -72,7 +72,8 @@
             "error",
             {
                 "beforeBlockComment": true,
-                "afterBlockComment": false
+                "afterBlockComment": false,
+                "allowBlockStart": true
             }
         ],
         "lines-between-class-members": ["error", "always"],

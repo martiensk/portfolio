@@ -47,10 +47,12 @@
             };
         },
         mounted () {
-            this.populateDisplay();
+            setTimeout(() => {
+                this.populateDisplay();
+            }, 800);
             setTimeout(() => {
                 this.$emit('play', 'terminal', 0.5);
-            }, 0.4);
+            }, 1000);
         },
         methods: {
 
