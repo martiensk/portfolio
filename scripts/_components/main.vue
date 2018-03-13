@@ -1,18 +1,21 @@
 <template>
     <section>
-        <transition name="glitch" :duration="{leave: 0}">
+        <transition v-on:leave="navExitAnim" v-on:enter="navEnterAnim">
             <router-view :nav-to="nextUrl" @nav="navigate" @play="play" @stop="stop"></router-view>
         </transition>
-        <span ref="commandSpace" v-html="commandText"></span>
+        <span id="commandSpace" ref="commandSpace" v-html="commandText + cursor"></span>
     </section>
 </template>
 
 <script>
+    /* global Linear */
     /**
      * The main Vue component. Serves as a container for all other components.
      * @namespace Components.Main
      * @author Martiens Kropff
      */
+    import TimelineMax from 'gsap/TimelineMax';
+    import {TextPlugin} from 'TextPlugin'; // eslint-disable-line no-unused-vars
     import Audio from '../audioHandler';
     import Home from './home';
     import Terminal from './terminal';
@@ -30,16 +33,51 @@
                 nextUrl: '',
                 popCounter: 0,
                 lastPop: null,
-                commandText: '~#<span class="blink">_</span>'
+                commandText: '~#',
+                cursor: '<span class="blink">_</span>',
+                playing: false
             };
         },
         computed: {
+    
+            /**
+             * Returns the audio class
+             * @returns {class} The audio class.
+             */
             audio () {
                 return audio;
             }
         },
         audio,
         methods: {
+            navExitAnim (el, done) {
+                const t = new TimelineMax({
+                    onStart: () => {
+                        this.play('film');
+                    },
+                    onComplete: () => {
+                        done();
+                    }
+                })
+                    .set(el, {filter: 'brightness(30%)', autoAlpha: 1, scale: '1, 0.8', y: '0'})
+                    .to(el, 0.200, {y: '100%', force3D: true})
+                    .to(el, 0.008, {y: '-100%', force3D: true})
+                    .to(el, 0.272, {autoAlpha: 0, scale: '1.3, 0.6', y: '100%', force3D: true})
+                    .to(el, 0.200, {filter: 'brightness(0%) contrast(100%)', autoAlpha: 1, scale: '1, 1', y: '0%', force3D: true})
+                    .to(el, 0.100, {filter: 'brightness(120%) contrast(100%) saturate(30%)'})
+                    .to(el, 0.100, {autoAlpha: 0});
+            },
+
+            navEnterAnim (el, done) {
+                const t = new TimelineMax({
+                    onComplete: () => {
+                        this.$emit('stop', 'film');
+                        done();
+                    }
+                })
+                    .to(el, 0.100, {autoAlpha: 1})
+                    .to(el, 0.100, {filter: 'brightness(100%) contrast(100%) saturate(0%)'});
+            },
 
             /**
              * Navigates to /loading in order to display terminal scripts.
@@ -50,10 +88,20 @@
              */
             navigate (path) {
                 const route = this.$router.resolve({path});
-                console.log(route.resolved.name);
-                console.log(this.$refs.commandSpace);
-                this.nextUrl = path;
-                this.$router.push('/loading');
+                const t = new TimelineMax({ // eslint-disable-line no-unused-vars
+                    onStart: () => {
+                        this.play('typing');
+                    },
+                    onComplete: () => {
+                        this.stop('typing');
+                        this.nextUrl = path;
+                        this.$router.push('/loading');
+                    }
+                })
+                    .set(this.$refs.commandSpace, {text: `${this.commandText} ${this.cursor}`})
+                    .to(this.$refs.commandSpace, 0.2, {autoAlpha: 1})
+                    .to(this.$refs.commandSpace, 1, {text: `${this.commandText} init mod cd ~/${route.resolved.name}${this.cursor}`, ease: Linear.easeNone})
+                    .to(this.$refs.commandSpace, 0.2, {autoAlpha: 0});
             },
 
             /**
@@ -65,11 +113,12 @@
             ambience () {
                 if (!this.audio.ready) {
                     window.requestAnimationFrame(this.ambience);
-                } else {
+                } else if (!this.playing) {
                     this.play('humming', 0.8);
                     this.lastPop = new Date().getTime();
                     this.audio.repeat('record', false);
                     this.makePop();
+                    this.playing = true;
                 }
             },
 
@@ -119,14 +168,15 @@
     };
 </script>
 <style lang="scss">
-    span {
+    #commandSpace {
         position: fixed;
         padding: 5px;
         bottom: 0;
         left: 0;
         z-index: 4;
         font-family: 'Fixedsys';
-        font-size: 10px;
+        font-size: 12px;
+        opacity: 0;
 
         .blink {
             animation: blink 0.8s infinite;

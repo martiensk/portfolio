@@ -134,5 +134,7 @@
     span {
         display: block;
         padding: 2px 0;
+        font-family: 'Fixedsys';
+        font-size: 12px;
     }
 </style>

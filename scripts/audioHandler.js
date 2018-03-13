@@ -96,6 +96,7 @@ export default class AudioHandler {
         if (typeof this.audioFiles[clip] !== 'undefined') {
             this.audioFiles[clip].volume = volume;
             this.audioFiles[clip].play();
+            this.audioFiles[clip].currentTime = 0;
         }
     }
 

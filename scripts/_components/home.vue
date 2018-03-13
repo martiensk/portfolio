@@ -2,7 +2,7 @@
     <div>
         <textarea :rows="selected.rows" :columns="selected.columns" v-model="selected.text"></textarea>
         <h1>I put symbols in the glow box.</h1>
-        <a @click.prevent="navigate('/')" href="/">TL;DR version</a>
+        <span @click.prevent="navigate('/')">TL;DR version</span>
     </div>
 </template>
 
