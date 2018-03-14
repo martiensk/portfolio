@@ -28,7 +28,7 @@
                     'cm init mod navigation...',
                     'initializing stability kernal v61c-alpha...',
                     `loading subset ${this.navTo}...`,
-                    'detecting available heapsize heapsize...',
+                    'detecting available heapsize...',
                     'splitting modules...',
                     `${this.hash()}`,
                     `${this.hash()}`,

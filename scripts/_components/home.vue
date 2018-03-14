@@ -2,7 +2,13 @@
     <div>
         <textarea :rows="selected.rows" :columns="selected.columns" v-model="selected.text"></textarea>
         <h1>I put symbols in the glow box.</h1>
-        <span @click.prevent="navigate('/')">TL;DR version</span>
+        <br />
+        <div>
+            <span @click="navigate('/')">About Me</span>
+            <span @click="navigate('/')">The Lab</span>
+            <span @click="navigate('/')">Tech Stack</span>
+            <span @click="navigate('/')">Get In Touch</span>
+        </div>
     </div>
 </template>
 
@@ -50,6 +56,15 @@
         }
     }
 
+    div {
+        div {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
     textarea {
         display: block;
         width: 130px;
@@ -66,6 +81,13 @@
     h1 {
         font-size: 16px;
         margin: 0;
+    }
+
+    span {
+        padding: 5px;
+        margin: 5px;
+        border: 1px solid #14fdce;
+        border-radius: 3px;
     }
 
     @include tablet {
