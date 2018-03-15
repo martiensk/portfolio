@@ -4,6 +4,7 @@
             <router-view :nav-to="nextUrl" @nav="navigate" @play="play" @stop="stop"></router-view>
         </transition>
         <span id="commandSpace" ref="commandSpace" v-html="commandText"></span>
+        <settings></settings>
     </section>
 </template>
 
@@ -19,6 +20,7 @@
     import Audio from '../audioHandler';
     import Home from './home';
     import Terminal from './terminal';
+    import Settings from './settings';
 
     const audio = new Audio();
 
@@ -26,7 +28,8 @@
         name: 'Main',
         components: {
             Home,
-            Terminal
+            Terminal,
+            Settings
         },
         data () {
             return {
