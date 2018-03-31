@@ -1,6 +1,6 @@
 <template>
     <div>
-        <textarea :rows="selected.rows" :columns="selected.columns" v-model="selected.text"></textarea>
+        <pre>{{selected.text}}</pre>
         <h1>I put symbols in the glow box.</h1>
         <br />
         <div>
@@ -94,6 +94,11 @@
         textarea {
             width: 380px;
         }
+    }
+
+    p {
+        padding: 0;
+        margin: 0;
     }
 
 </style>
