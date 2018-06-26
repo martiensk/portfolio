@@ -1,6 +1,6 @@
 const conf = require('./webpack.shared');
 
-let dev = Object.assign(conf('development'), {
+const dev = Object.assign(conf('development'), {
     devtool: 'source-map',
     devServer: {
         contentBase: 'build/',
@@ -10,6 +10,5 @@ let dev = Object.assign(conf('development'), {
         overlay: true
     }
 });
-
 
 module.exports = dev;

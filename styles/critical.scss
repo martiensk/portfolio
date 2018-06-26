@@ -1,4 +1,5 @@
-@import 'styles/crtAnimations.scss';
+@import 'crtAnimations.scss';
+@import 'colors.scss';
 
 * {
     box-sizing: border-box;
@@ -16,7 +17,7 @@ html, body, section {
 
 section {
     background-color: darken(#031e11, 4%);
-    color: #14fdce;
+    color: $_terminal-text;
     font-family: 'Courier', sans-serif;
 
     > div {

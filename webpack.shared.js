@@ -1,16 +1,11 @@
 const path = require('path');
-const webpack = require('webpack')
-const vue = require('vue');
-const vuex = require('vuex');
-const merge = require('webpack-merge');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-/* const WorkboxPlugin = require('workbox-webpack-plugin'); */
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const criticalCSS = new ExtractTextPlugin({
@@ -24,6 +19,7 @@ const mainCSS = new ExtractTextPlugin({
 
 /**
  * @param {string} env The node environment as a string.
+ * @param {boolean} ssr If true, webpack will deploy assets for server-side rendering.
  * @returns {object} A webpack configuration based on the supplied environment string.
  */
 module.exports = (env, ssr = false) => {
@@ -33,25 +29,25 @@ module.exports = (env, ssr = false) => {
             filename: env === 'development' ? 'js/[name].js' : 'js/[chunkhash].js',
             path: env === 'development' ? path.resolve(__dirname, 'build') : path.resolve(__dirname, 'dist')
         },
-        module: {
-            rules: getRules(env)
-        },
+        module: {rules: getRules(env)},
         resolve: {
             extensions: ['.js', '.vue', '.scss'],
-            alias: {
-                TextPlugin: path.resolve(__dirname, './scripts/vendor/TextPlugin.min.js')
-            }
+            alias: {TextPlugin: path.resolve(__dirname, './scripts/vendor/TextPlugin.min.js')}
         },
         plugins: getPlugins(env, ssr)
-    }
+    };
 };
 
+/**
+ * @param {string} env The node environment as a string.
+ * @returns {object} A set of rules based on the node environment.
+ */
 const getRules = (env) => {
-    let rules = [
+    const rules = [
         {
-            enforce: "pre",
+            enforce: 'pre',
             test: /\.(js|vue)$/,
-            loader: "eslint-loader",
+            loader: 'eslint-loader',
             options: {
                 formatter: require('eslint-friendly-formatter'),
                 emitWarning: true,
@@ -62,12 +58,8 @@ const getRules = (env) => {
             test: /\.vue$/,
             loader: 'vue-loader',
             options: {
-                loaders: {
-                    js: 'babel-loader?presets[]=env&plugins[]=transform-object-rest-spread'
-                },
-                cssModules: {
-                    minimize: env === 'development' ? false : true
-                }
+                loaders: {js: 'babel-loader?presets[]=env&plugins[]=transform-object-rest-spread'},
+                cssModules: {minimize: env !== 'development'}
             }
         },
         {
@@ -84,9 +76,7 @@ const getRules = (env) => {
         {
             test: /\.scss$/,
             loader: 'sass-loader',
-            options: {
-                sourceMap: env === 'development' ? true : false
-            }
+            options: {sourceMap: env === 'development'}
         },
         {
             test: /\.(png|svg|jpg|gif)$/,
@@ -123,45 +113,38 @@ const getRules = (env) => {
         }
     ];
 
-    let devRules = [
+    const devRules = [
         {
             enforce: 'post',
             test: /\.scss$/,
             use: [
-                {
-                    loader: 'style-loader'
-                },
+                {loader: 'style-loader'},
                 {
                     loader: 'css-loader',
-                    options: {
-                        sourceMap: true
-                    }
+                    options: {sourceMap: true}
                 },
                 {
                     loader: 'postcss-loader',
-                    options: {
-                        sourceMap: true
-                    }
+                    options: {sourceMap: true}
                 }
             ]
         }
-    ]
+    ];
 
-    let prodRules = [
+    const prodRules = [
         {
             enforce: 'post',
             test: /critical.scss/,
             loader: criticalCSS.extract({
                 use: [
                     {
-                        loader: 'css-loader', options: { 
+                        loader: 'css-loader',
+                        options: {
                             minimize: true,
-                            importLoaders: 1 
+                            importLoaders: 1
                         }
                     },
-                    {
-                        loader: 'postcss-loader'
-                    }
+                    {loader: 'postcss-loader'}
                 ]
             })
         },
@@ -171,40 +154,40 @@ const getRules = (env) => {
             loader: mainCSS.extract({
                 use: [
                     {
-                        loader: 'css-loader', options: { 
+                        loader: 'css-loader',
+                        options: {
                             minimize: true,
-                            importLoaders: 1 
+                            importLoaders: 1
                         }
                     },
-                    {
-                        loader: 'postcss-loader'
-                    }
+                    {loader: 'postcss-loader'}
                 ]
             })
         }
-    ]
+    ];
 
     return env === 'development' ? rules.concat(devRules) : rules.concat(prodRules);
-}
+};
 
-function getPlugins(env, ssr) {
-    let pluginPack = [
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify(env)
-            }
-        }),
+/**
+ * @param {string} env The node environment as a string.
+ * @param {boolean} ssr If true, webpack will deploy assets for server-side rendering.
+ * @returns {object} An object containing plugins to be included in the webpack build.
+ */
+const getPlugins = (env, ssr) => {
+    const pluginPack = [
+        new webpack.DefinePlugin({'process.env': {NODE_ENV: JSON.stringify(env)}}),
         new StyleLintPlugin({
-            'fix': env === 'development' ? false : true,
+            fix: env !== 'development',
             configOverrides: {
                 rules: env === 'development' ? {} : {
-                    "order/order": [
-                        "dollar-variables",
-                        "declarations",
-                        "at-rules",
-                        "rules"
+                    'order/order': [
+                        'dollar-variables',
+                        'declarations',
+                        'at-rules',
+                        'rules'
                     ],
-                    "order/properties-alphabetical-order": true
+                    'order/properties-alphabetical-order': true
                 }
             }
         }),
@@ -220,7 +203,7 @@ function getPlugins(env, ssr) {
                 collapseWhitespace: true
             }
         })
-    ]
+    ];
 
     if (env === 'development') {
         pluginPack.push(new CleanWebpackPlugin(['build']));
@@ -228,29 +211,14 @@ function getPlugins(env, ssr) {
         pluginPack.push(new UglifyJsPlugin({
             uglifyOptions: {
                 ie8: false,
-                output: {
-                    comments: false
-                }
+                output: {comments: false}
             }
         }));
         pluginPack.push(criticalCSS);
         pluginPack.push(mainCSS);
-        /* pluginPack.push(new OptimizeCssAssetsPlugin({
-            cssProcessor: require('cssnano'),
-            cssProcessorOptions: {
-                preset:
-                    ['default',
-                        { 
-                            discardComments: { removeAll: true },
-                            discardUnused: {fontFace: false}
-                        }
-                    ]
-            },
-            canPrint: true
-        })); */
         pluginPack.push(new StyleExtHtmlWebpackPlugin('css/critical.css'));
         !ssr && pluginPack.push(new BundleAnalyzerPlugin());
     }
 
     return pluginPack;
-}
+};
