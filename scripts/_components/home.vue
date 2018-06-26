@@ -3,7 +3,7 @@
         <pre>{{selected.text}}</pre>
         <h1>I put symbols in the glow box.</h1>
         <br />
-        <div>
+        <div class="main-nav">
             <span @click="navigate('/')" @mouseenter="borderize" @mouseleave="deborderize" id="about">About Me</span>
             <span @click="navigate('/')" @mouseenter="borderize" @mouseleave="deborderize" id="lab">The Lab</span>
             <span @click="navigate('/')" @mouseenter="borderize" @mouseleave="deborderize" id="tech">Tech Stack</span>
@@ -118,20 +118,24 @@
         font-size: 16px;
         margin: 0;
     }
+   
+    .main-nav {
 
-    span {
-        font-family: 'Bungee';
-        font-size: 12px;
-        padding: 4px 8px;
-        margin: 8px;
-        border: 2px solid $_terminal-inactive;
-        cursor: pointer;
+        span {
+            font-family: 'Bungee';
+            font-size: 12px;
+            padding: 4px 8px;
+            margin: 8px;
+            border: 2px solid $_terminal-inactive;
+            cursor: pointer;
+        }
     }
 
-    $class-list: '#about', '#lab', '#tech', '#contact';
+    $id-list: '#about', '#lab', '#tech', '#contact';
 
-    @each $class in $class-list {
-        #{$class}:before, #{$class}:after {
+    @each $id in $id-list {
+
+        #{$id}:before, #{$id}:after {
             content:'';
             width:0px;
             height:0px;
@@ -139,7 +143,7 @@
             margin:0;
         }
 
-        #{$class}:before {
+        #{$id}:before {
             position:absolute;
             top:-2px;
             left:-2px;
@@ -147,7 +151,7 @@
             border-top: 2px solid transparent;
         }
 
-        #{$class}:after {
+        #{$id}:after {
             position:absolute;
             bottom:-2px;
             right:-2px;
