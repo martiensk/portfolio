@@ -28,21 +28,11 @@ section {
         justify-content: center;
         width: 100%;
 
+        @extend %crt;
+
         * {
             position: relative;
             z-index: 4;
         }
-
-        @extend %crt;
     }
-}
-
-span:not('.b') {
-    left: 100%;
-    position: absolute;
-}
-
-.b {
-    color: transparent;
-    text-shadow: none;
 }
