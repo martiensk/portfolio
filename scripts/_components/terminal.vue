@@ -10,8 +10,14 @@
 
 <script>
     /* global Linear */
+    /**
+     * The terminal Vue component. Shows a cool-ish terminal loading animation (inspired by Fallout).
+     * @namespace Components.Terminal
+     * @author Martiens Kropff
+     */
     import {TweenMax} from 'gsap';
     import {TextPlugin} from 'TextPlugin'; // eslint-disable-line no-unused-vars
+    import EventBus from '../eventBus';
 
     export default {
         name: 'Terminal',
@@ -51,13 +57,15 @@
                 this.populateDisplay();
             }, 800);
             setTimeout(() => {
-                this.$emit('play', 'terminal', 0.5);
+                EventBus.$emit('play', 'terminal', 0.5);
             }, 1000);
         },
         methods: {
 
             /**
              * Generates a four digit string.
+             * @namespace Components.Terminal
+             * @author Martiens Kropff
              * @param {bool} [splice=false] If true, the sptring is split into groups of two digits seperated by a space.
              * @returns {string} The result string.
              */
@@ -69,6 +77,8 @@
             },
 
             /**
+             * @namespace Components.Terminal
+             * @author Martiens Kropff
              * Generates a string by calling the 'gen' function multiple times. It is meant to look like a RAM address.
              * Accuracy doesn't matter, it is for show only.
              * @returns {string} The generated string.
@@ -79,6 +89,8 @@
 
             /**
              * Populates the 'terminal' with string to give a 'Linux-y' feel when transitioning Vue components.
+             * @namespace Components.Terminal
+             * @author Martiens Kropff
              * @returns {void}
              */
             populateDisplay () {
@@ -101,6 +113,8 @@
 
             /**
              * Vue list transition - Incrementally displays string to the user.
+             * @namespace Components.Terminal
+             * @author Martiens Kropff
              * @param {HTMLElement} el The element that is being transitioned.
              * @param {callBackFunction} done Callback function to call when animation is done.
              * @returns {void}
@@ -121,7 +135,7 @@
             this.counter = 0;
             this.display = [];
             this.lastUpdate = null;
-            this.$emit('stop', 'terminal');
+            EventBus.$emit('stop', 'terminal');
         }
     };
 </script>

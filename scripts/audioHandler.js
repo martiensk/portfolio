@@ -3,6 +3,7 @@ import '../audio/record.mp3';
 import '../audio/typing.mp3';
 import '../audio/terminal.mp3';
 import '../audio/humming.mp3';
+import '../audio/border-button.mp3';
 
 export default class AudioHandler {
     /**
@@ -24,7 +25,8 @@ export default class AudioHandler {
             record: './audio/record.mp3',
             humming: './audio/humming.mp3',
             typing: './audio/typing.mp3',
-            terminal: './audio/terminal.mp3'
+            terminal: './audio/terminal.mp3',
+            borderButton: './audio/border-button.mp3'
         };
 
         /**
@@ -64,6 +66,8 @@ export default class AudioHandler {
     /**
      * Once an audio clip has been loaded this function will create an HTML5 audio element that can be used to play or pause the specific clip.
      * Once all the clips have been loaded this element sets the 'ready' class member to true.
+     * @author Martiens Kropff
+     * @memberOf AudioHandler
      * @param {string} clip The clip that has been loaded.
      * @param {string} url The clip's URL.
      * @returns {void}

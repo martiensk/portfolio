@@ -1,3 +1,8 @@
+/**
+ * Vue router config.
+ * @namespace Router
+ * @author Martiens Kropff
+ */
 import Terminal from './_components/terminal';
 import Home from './_components/home';
 

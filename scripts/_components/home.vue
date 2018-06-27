@@ -3,29 +3,37 @@
         <pre>{{selected.text}}</pre>
         <h1>I put symbols in the glow box.</h1>
         <br />
-        <div class="main-nav">
-            <span @click="navigate('/')" @mouseenter="borderize" @mouseleave="deborderize" id="about">About Me</span>
-            <span @click="navigate('/')" @mouseenter="borderize" @mouseleave="deborderize" id="lab">The Lab</span>
-            <span @click="navigate('/')" @mouseenter="borderize" @mouseleave="deborderize" id="tech">Tech Stack</span>
-            <span @click="navigate('/')" @mouseenter="borderize" @mouseleave="deborderize" id="contact">Get In Touch</span>
+        <div>
+            <border-button v-for="(item, id) in navLinks" :key="id" @click="navigate('/')" :isNavigating="isNavigating" :buttonText="item"></border-button>
         </div>
     </div>
 </template>
 
 <script>
     /**
-     * @namespace Home
+     * The home page (/)
+     * @namespace Components.Home
+     * @author Martiens Kropff
      */
 
     import {mapGetters} from 'vuex';
-    import CSSRulePlugin from 'gsap/CSSRulePlugin';
-    import {TweenMax} from 'gsap';
     import {full, mid, small} from '../ascii';
     import Mixin from '../mixins';
+    import BorderButton from './border-button';
 
     export default {
         name: 'Home',
         mixins: [Mixin],
+        components: {BorderButton},
+        props: {
+            isNavigating: {
+                type: Boolean,
+                required: true
+            }
+        },
+        data () {
+            return {navLinks: ['About Me', 'The Lab', 'Tech Stack', 'Get In Touch']};
+        },
         computed: {
             ...mapGetters([
                 'media'
@@ -33,6 +41,8 @@
 
             /**
              * Returns ASCII art based on the screen media.
+             * @memberOf Components.Home
+             * @author Martiens Kropff
              * @returns {void}
              */
             selected () {
@@ -45,39 +55,6 @@
                     return full;
                 }
             }
-        },
-        methods: {
-            borderize (e) {
-                const pseudo = [CSSRulePlugin.getRule(`#${e.target.id}:before`), CSSRulePlugin.getRule(`#${e.target.id}:after`)];
-                for (const rule of pseudo) {
-                    TweenMax.set(rule, {
-                        borderColor: '#14fdce',
-                        onComplete () {
-                            TweenMax.to(e.target, 0.3, {backgroundColor: 'rgba(1,119,95,0.3)'});
-                            TweenMax.to(rule, 0.3, {width: e.target.clientWidth + 'px', height: e.target.clientHeight + 2 + 'px'});
-                        }
-                    });
-                }
-            },
-            deborderize (e) {
-                const pseudo = [CSSRulePlugin.getRule(`#${e.target.id}:before`), CSSRulePlugin.getRule(`#${e.target.id}:after`)];
-                for (const rule of pseudo) {
-                    TweenMax.to(e.target, 0.3, {backgroundColor: 'rgba(1,119,95,0)'});
-                    TweenMax.to(rule, 0.3, {
-                        width: '0px',
-                        height: '0px',
-                        onComplete () {
-                            TweenMax.set(rule, {borderColor: 'transparent'});
-                        }
-                    });
-                }
-            }
-        },
-        mounted () {
-            document.querySelectorAll('section div div span').forEach((element) => {
-                TweenMax.set(CSSRulePlugin.getRule(`#${element.id}:before`), {width: '0px', height: '0px'});
-                TweenMax.set(CSSRulePlugin.getRule(`#${element.id}:after`), {width: '0px', height: '0px'});
-            });
         }
     };
 </script>
@@ -117,47 +94,6 @@
     h1 {
         font-size: 16px;
         margin: 0;
-    }
-   
-    .main-nav {
-
-        span {
-            font-family: 'Bungee';
-            font-size: 12px;
-            padding: 4px 8px;
-            margin: 8px;
-            border: 2px solid $_terminal-inactive;
-            cursor: pointer;
-        }
-    }
-
-    $id-list: '#about', '#lab', '#tech', '#contact';
-
-    @each $id in $id-list {
-
-        #{$id}:before, #{$id}:after {
-            content:'';
-            width:0px;
-            height:0px;
-            padding:0;
-            margin:0;
-        }
-
-        #{$id}:before {
-            position:absolute;
-            top:-2px;
-            left:-2px;
-            border-left: 2px solid transparent;
-            border-top: 2px solid transparent;
-        }
-
-        #{$id}:after {
-            position:absolute;
-            bottom:-2px;
-            right:-2px;
-            border-bottom: 2px solid transparent;
-            border-right: 2px solid transparent;
-        }
     }
 
     @include tablet {

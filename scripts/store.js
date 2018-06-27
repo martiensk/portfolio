@@ -1,3 +1,8 @@
+/**
+ * Vuex setup.
+ * @namespace Store
+ * @author Martiens Kropff
+ */
 import Vuex from 'vuex';
 import Vue from 'vue';
 
@@ -10,6 +15,8 @@ export default () => {
 
             /**
              * Sets the device media parameter based on the screen size.
+             * @memberOf Store
+             * @author Martiens Kropff
              * @param {object} state - The Vuex state
              * @param {number} mediaWidth - The width of the browser window.
              * @returns {void}

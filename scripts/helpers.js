@@ -1,4 +1,13 @@
 /**
+ * A collection of helper functions.
+ * @namespace Helpers
+ * @author Martiens Kropff
+ */
+
+/**
+ * Builds a CSS selector for an HTML element
+ * @memberOf Helpers
+ * @author Martiens Kropff
  * @param {HTMLElement} el The element that you want the CSS selector for.
  * @returns {string} The full CSS selector.
  */
@@ -18,9 +27,13 @@ export const CSSPath = (el) => {
 };
 
 /**
+ * Builds a part of a CSS selector. Used by the CSSPath method.
+ * @memberOf Helpers
+ * @author Martiens Kropff
  * @param {HTMLElement} el The element that you want the CSS selector for.
  * @param {string} path The current CSS selector.
  * @returns {string} A partial CSS selector.
+ * @see {Helpers.CSSPath}
  */
 const TestPath = (el, path) => {
     if (el.tagName === null) {

@@ -1,3 +1,8 @@
+/**
+ * ASCII text for home page
+ * @namespace ASCII
+ * @author Martiens Kropff
+ */
 const full = {
     text: `                         __  _                 __  
    ____ ___  ____ ______/ /_(_)__  ____  _____/ /__

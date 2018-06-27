@@ -1,7 +1,7 @@
 <template>
     <section>
         <transition v-on:leave="navAnim">
-            <router-view :nav-to="nextUrl" @nav="navigate" @play="play" @stop="stop"></router-view>
+            <router-view :nav-to="nextUrl" :is-navigating="isNavigating" @nav="navigate"></router-view>
         </transition>
         <span id="commandSpace" ref="commandSpace" v-html="commandText"></span>
         <settings></settings>
@@ -21,6 +21,7 @@
     import Home from './home';
     import Terminal from './terminal';
     import Settings from './settings';
+    import EventBus from '../eventBus';
 
     const audio = new Audio();
 
@@ -37,7 +38,8 @@
                 popCounter: 0,
                 lastPop: null,
                 commandText: '~#',
-                playing: false
+                playing: false,
+                isNavigating: false
             };
         },
         computed: {
@@ -92,11 +94,13 @@
                 new TimelineMax({
                     onStart: () => {
                         this.play('typing');
+                        this.isNavigating = true;
                     },
                     onComplete: () => {
                         this.stop('typing');
                         this.nextUrl = path;
                         this.$router.push('/loading');
+                        this.isNavigating = false;
                     }
                 })
                     .set(this.$refs.commandSpace, {text: `${this.commandText}`})
@@ -118,6 +122,7 @@
                     this.play('humming', 0.8);
                     this.lastPop = new Date().getTime();
                     this.audio.repeat('record', false);
+                    this.audio.repeat('borderButton', false);
                     this.makePop();
                     this.playing = true;
                 }
@@ -165,6 +170,12 @@
         },
         mounted () {
             this.ambience();
+            EventBus.$on('play', (clip, volume = 1) => {
+                this.play(clip, volume);
+            });
+            EventBus.$on('stop', (clip) => {
+                this.stop(clip);
+            });
         }
     };
 </script>

@@ -4,11 +4,25 @@
     </div>
 </template>
 <script>
+/**
+ * The settings Vue component. Allows the user to switch of animations, sounds, etc.
+ * @namespace Components.Settings
+ * @author Martiens Kropff
+ */
 import {TweenMax} from 'gsap';
 
 export default {
     name: 'Settings',
     methods: {
+
+        /**
+         * Rotates the settings button.
+         * @namespace Components.Settings
+         * @author Martiens Kropff
+         * @param {Event} e The mouseover event.
+         * @param {string} dir The direction of the rotation.
+         * @returns {void}
+         */
         rotate (e, dir) {
             TweenMax.to(e.target, 0.4, {rotation: dir === 'forward' ? 180 : 0, transformOrigin: '50% 50%'});
         }
