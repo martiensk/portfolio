@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section @mousemove="interaction" @keypress="interaction" @scroll="interaction" @touchstart="interaction">
         <transition v-on:leave="navAnim">
             <router-view :nav-to="nextUrl" :is-navigating="isNavigating" @nav="navigate"></router-view>
         </transition>
@@ -39,7 +39,8 @@
                 lastPop: null,
                 commandText: '~#',
                 playing: false,
-                isNavigating: false
+                isNavigating: false,
+                interacted: false
             };
         },
         computed: {
@@ -54,6 +55,11 @@
         },
         audio,
         methods: {
+            interaction () {
+                if (!this.interacted) {
+                    this.interacted = true;
+                }
+            },
 
             /**
              * Animation that plays whenever the router-view changes. Pretty cool, even if I say so myself.
@@ -116,7 +122,7 @@
              * @returns {void}
              */
             ambience () {
-                if (!this.audio.ready) {
+                if (!this.audio.ready || !this.interacted) {
                     window.requestAnimationFrame(this.ambience);
                 } else if (!this.playing) {
                     this.play('humming', 0.8);
