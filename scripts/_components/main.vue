@@ -1,5 +1,5 @@
 <template>
-    <section @mousemove="interaction" @keypress="interaction" @scroll="interaction" @touchstart="interaction">
+    <section ref="section" @mousemove="interaction" @keypress.once="interaction" @scroll.once="interaction" @touchstart.once="interaction">
         <transition v-on:leave="navAnim">
             <router-view :nav-to="nextUrl" :is-navigating="isNavigating" @nav="navigate"></router-view>
         </transition>
@@ -40,7 +40,8 @@
                 commandText: '~#',
                 playing: false,
                 isNavigating: false,
-                interacted: false
+                interacted: false,
+                interactionCount: 0
             };
         },
         computed: {
@@ -55,10 +56,20 @@
         },
         audio,
         methods: {
+
+            /**
+             * Listens for the first interaction on the document. This is because audio can't play in Chrome unless the user has already interacted with the document.
+             * @author Martiens Kropff
+             * @memberOf Components.Main
+             * @returns {void}
+             */
             interaction () {
+                console.log('interaction');
                 if (!this.interacted) {
                     this.interacted = true;
                 }
+                this.interactionCount += 1;
+                this.$off('mousemove');
             },
 
             /**
