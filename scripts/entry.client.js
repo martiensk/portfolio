@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Routes from './router';
 import Store from './store';
 import Main from './_components/main';
+import {mapMutations} from 'vuex';
 import '../styles/critical.scss';
 import '../styles/main.scss';
 
@@ -16,16 +17,24 @@ const app = new Vue({
     store,
     router,
     methods: {
+        ...mapMutations({
+            media: 'setMedia',
+            set: 'setSetting'
+        }),
 
         /**
          * Sends the width of the browser window to the Vuex store where the media string is updated accordingly.
          * @returns {void}
          */
         setMediaWidth () {
-            this.$store.commit('setmedia', window.innerWidth);
+            this.media(window.innerWidth);
         }
     },
     beforeMount () {
+        this.set({
+            key: 'mute',
+            value: false
+        });
         this.setMediaWidth();
         window.addEventListener('resize', () => {
             this.setMediaWidth();

@@ -64,7 +64,6 @@
              * @returns {void}
              */
             interaction () {
-                console.log('interaction');
                 if (!this.interacted) {
                     this.interacted = true;
                 }

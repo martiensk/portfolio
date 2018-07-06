@@ -32,7 +32,10 @@ module.exports = (env, ssr = false) => {
         module: {rules: getRules(env)},
         resolve: {
             extensions: ['.js', '.vue', '.scss'],
-            alias: {TextPlugin: path.resolve(__dirname, './scripts/vendor/TextPlugin.min.js')}
+            alias: {
+                TextPlugin: path.resolve(__dirname, './scripts/vendor/TextPlugin.min.js'),
+                MorphSVG: path.resolve(__dirname, './scripts/vendor/MorphSVGPlugin.min.js')
+            }
         },
         plugins: getPlugins(env, ssr)
     };
