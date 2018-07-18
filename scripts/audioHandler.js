@@ -30,6 +30,22 @@ export default class AudioHandler {
         };
 
         /**
+         * This object will keep track of what volume sounds should be played at if sound is muted, in case it gets unmuted again.
+         * @author Martiens Kropff
+         * @memberOf AudioHandler
+         * @type {object}
+         */
+        this.muteVolumes = {};
+
+        /**
+         * Determines if audio should be muted or not.
+         * @author Martiens Kropff
+         * @memberOf AudioHandler
+         * @type {object}
+         */
+        this.muted = false;
+
+        /**
          * True if all audio clips have been preloaded.
          * @author Martiens Kropff
          * @memberOf AudioHandler
@@ -81,6 +97,7 @@ export default class AudioHandler {
         source.type = 'audio/mpeg';
         source.src = url;
         audio.appendChild(source);
+        audio.volume = 0;
         this.audioFiles[clip] = audio;
 
         if (this.fileCounter === Object.keys(this.audioFiles).length) {
@@ -98,7 +115,12 @@ export default class AudioHandler {
      */
     play (clip, volume) {
         if (typeof this.audioFiles[clip] !== 'undefined') {
-            this.audioFiles[clip].volume = volume;
+            if (!this.muted) {
+                this.audioFiles[clip].volume = volume;
+            } else {
+                this.muteVolumes[clip] = volume;
+                this.audioFiles[clip].volume = 0;
+            }
             this.audioFiles[clip].play();
             this.audioFiles[clip].currentTime = 0;
         }
@@ -127,5 +149,32 @@ export default class AudioHandler {
         if (typeof this.audioFiles[clip] !== 'undefined') {
             this.audioFiles[clip].loop = repeat;
         }
+    }
+
+    /**
+     * Mutes all audio
+     * @author Martiens Kropff
+     * @memberOf AudioHandler
+     * @returns {void}
+     */
+    mute () {
+        for (const i in this.audioFiles) {
+            this.muteVolumes[i] = this.audioFiles[i].volume;
+            this.audioFiles[i].volume = 0;
+        }
+        this.muted = true;
+    }
+
+    /**
+     * Unmutes audio.
+     * @author Martiens Kropff
+     * @memberOf AudioHandler
+     * @returns {void}
+     */
+    unmute () {
+        for (const i in this.audioFiles) {
+            this.audioFiles[i].volume = this.muteVolumes[i];
+        }
+        this.muted = false;
     }
 }

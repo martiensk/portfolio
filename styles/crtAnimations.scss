@@ -15,7 +15,7 @@
     &::before {
         animation: flicker 0.5s infinite;
         background-color: darken(#031e11, 4%);
-        z-index: 2;
+        z-index: 3;
 
         @extend %pseudo-styles;
     }

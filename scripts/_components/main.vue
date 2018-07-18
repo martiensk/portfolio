@@ -192,6 +192,12 @@
             EventBus.$on('stop', (clip) => {
                 this.stop(clip);
             });
+            EventBus.$on('mute', () => {
+                this.audio.mute();
+            });
+            EventBus.$on('unmute', () => {
+                this.audio.unmute();
+            });
         }
     };
 </script>
