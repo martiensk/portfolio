@@ -6,7 +6,7 @@
             <path id="vol1" d="M121.71,61.71a61.59,61.59,0,0,1-16.89,42.52c-3.52,3.81-7,4.33-10,1.7s-2.83-6,.64-10c18.45-21.1,18.49-47.78.11-68.67-3.52-4-3.8-7.26-.87-10s6.56-2.22,10,1.49A61.92,61.92,0,0,1,121.71,61.71Z"/>
             <path id="vol2" d="M88.82,60.2c.06-6.42-2.7-13-7.68-18.74-3.38-3.91-3.54-7.46-.63-10s6.55-1.89,10,1.77C105,48.83,105,74.4,90.38,90c-3.4,3.62-7.25,4.3-9.95,1.52-3.16-3.27-2.36-6.43.42-9.68C86.78,74.84,88.85,69.28,88.82,60.2Z"/>
         </svg>
-        <svg ref="transition" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199.9 199.8">
+        <svg ref="transition" @click="setTransition" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199.9 199.8">
             <path id="transitions" d="M100,17.84A82,82,0,1,0,181.89,100,82.12,82.12,0,0,0,100,17.84ZM75,136.22,40.09,99.9,73.43,65l5.3,4.64L50.57,100.17,80.49,131.5ZM98.9,150.45l-8.59-1.21,14-98L113,52.45Zm28.91-14.23-5.3-4.64L150.68,101,120.75,69.71,126.27,65l34.89,36.32Z"/>
         </svg>
     </div>
@@ -34,17 +34,18 @@ export default {
                 novol1: 'M102.92,57.92c4.51,4.58,13.33,13.31,13.33,13.31l7.7,7.23-8.82,8.83L73.85,45.8l8.91-8.5,5.3,5.54S96.48,51.52,102.92,57.92Z',
                 novol2: 'M94.73,58.3c4.54-4.55,13.2-13.43,13.2-13.43l7.17-7.77,8.9,8.75L82.85,87.47l-8.57-8.85,5.5-5.34S88.38,64.79,94.73,58.3Z',
                 transitions: 'M100,17.84A82,82,0,1,0,181.89,100,82.12,82.12,0,0,0,100,17.84ZM75,136.22,40.09,99.9,73.43,65l5.3,4.64L50.57,100.17,80.49,131.5ZM98.9,150.45l-8.59-1.21,14-98L113,52.45Zm28.91-14.23-5.3-4.64L150.68,101,120.75,69.71,126.27,65l34.89,36.32Z',
-                noTransition: 'M100,17.84A82,82,0,1,0,181.89,100,82.12,82.12,0,0,0,100,17.84ZM146.49,139.5l-7.5,7.34-39.25-38.6L57,143.13l-6.81-7.95,42-34.36L53.65,62.92l7.57-7.42L100.4,94.1,143,59.21l6.89,8L108,101.53Z'
-            }
+                noTransitions: 'M100,17.84A82,82,0,1,0,181.89,100,82.12,82.12,0,0,0,100,17.84ZM146.49,139.5l-7.5,7.34-39.25-38.6L57,143.13l-6.81-7.95,42-34.36L53.65,62.92l7.57-7.42L100.4,94.1,143,59.21l6.89,8L108,101.53Z'
+            },
+            mute: false
         };
     },
     computed: {
         ...mapGetters([
-            'settings'
+            'transitions'
         ])
     },
     methods: {
-        ...mapMutations({set: 'setSetting'}),
+        ...mapMutations(['setTransitions']),
 
         displaySettings () {
             const t = new TimelineMax({
@@ -70,11 +71,8 @@ export default {
          * @returns {void}
          */
         setVolume () {
-            this.set({
-                key: 'mute',
-                value: !this.settings.mute
-            });
-            if (this.settings.mute) {
+            this.mute = !this.mute;
+            if (this.mute) {
                 TweenMax.to('#vol1', 0.4, {morphSVG: this.paths.novol1, ease: Expo.easeOut});
                 TweenMax.to('#vol2', 0.4, {morphSVG: this.paths.novol2, ease: Expo.easeOut});
                 EventBus.$emit('mute');
@@ -83,6 +81,14 @@ export default {
                 TweenMax.to('#vol2', 0.4, {morphSVG: this.paths.vol2, ease: Expo.easeOut});
                 EventBus.$emit('unmute');
             }
+        },
+
+        setTransition () {
+            if (this.transitions) {
+
+            } else {
+            }
+            this.setTransitions(!this.transitions);
         }
     },
     mounted () {

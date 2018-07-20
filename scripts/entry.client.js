@@ -17,10 +17,7 @@ const app = new Vue({
     store,
     router,
     methods: {
-        ...mapMutations({
-            media: 'setMedia',
-            set: 'setSetting'
-        }),
+        ...mapMutations({media: 'setMedia'}),
 
         /**
          * Sends the width of the browser window to the Vuex store where the media string is updated accordingly.
@@ -31,10 +28,6 @@ const app = new Vue({
         }
     },
     beforeMount () {
-        this.set({
-            key: 'mute',
-            value: false
-        });
         this.setMediaWidth();
         window.addEventListener('resize', () => {
             this.setMediaWidth();

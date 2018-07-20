@@ -12,7 +12,7 @@ export default () => {
     return new Vuex.Store({
         state: {
             media: 'none',
-            settings: {mute: false}
+            transitions: true
         },
         mutations: {
 
@@ -35,23 +35,25 @@ export default () => {
             },
 
             /**
-             * Sets a specific setting.
+             * Sets wether or not page transitions should happen
              * @memberOf Store
              * @author Martiens Kropff
              * @param {object} state The Vuex state
-             * @param {object} payload The payload should be an object containing two values - a 'key' dictating which setting to change and a value that it should be set to.
+             * @param {Boolean} value True if transitions should happen, otherwise false.
              * @returns {void}
              */
-            setSetting (state, payload) {
-                if (payload.key in state.settings) { state.settings[payload.key] = payload.value; }
+            setTransitions (state, value) {
+                if (typeof value === 'boolean') {
+                    state.transitions = value;
+                }
             }
         },
         getters: {
             media: (state) => {
                 return state.media;
             },
-            settings: (state) => {
-                return state.settings;
+            transitions: (state) => {
+                return state.transitions;
             }
         }
     });
