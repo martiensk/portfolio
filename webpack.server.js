@@ -1,8 +1,6 @@
 const conf = require('./webpack.shared');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 
 const base = conf('production', true);
 

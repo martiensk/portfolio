@@ -4,7 +4,6 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "w4": "webpack --config webpack.server.js",
     "dev": "webpack-dev-server --hot --inline --open --config webpack.dev.js",
     "prod": "webpack --config webpack.server.js && webpack --config webpack.prod.js",
     "fix": "node stylelint.fix.js"
