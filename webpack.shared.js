@@ -1,11 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('mini-css-extract-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin');
+const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const criticalCSS = new ExtractTextPlugin({
@@ -24,7 +23,7 @@ const mainCSS = new ExtractTextPlugin({
  */
 module.exports = (env, ssr = false) => {
     return {
-        entry: ['core-js/fn/promise', 'vue', 'vuex', './scripts/entry.client.js'],
+        entry: ['core-js/fn/promise', './scripts/entry.client.js'],
         output: {
             filename: env === 'development' ? 'js/[name].js' : 'js/[chunkhash].js',
             path: env === 'development' ? path.resolve(__dirname, 'build') : path.resolve(__dirname, 'dist')
@@ -61,20 +60,14 @@ const getRules = (env) => {
             test: /\.vue$/,
             loader: 'vue-loader',
             options: {
-                loaders: {js: 'babel-loader?presets[]=env&plugins[]=transform-object-rest-spread'},
+                loaders: {js: 'babel-loader'},
                 cssModules: {minimize: env !== 'development'}
             }
         },
         {
             test: /\.js$/,
             exclude: /node_modules/,
-            use: {
-                loader: 'babel-loader',
-                options: {
-                    presets: ['env'],
-                    plugins: ['transform-object-rest-spread', 'transform-object-assign']
-                }
-            }
+            use: {loader: 'babel-loader'}
         },
         {
             test: /\.scss$/,
@@ -138,34 +131,38 @@ const getRules = (env) => {
         {
             enforce: 'post',
             test: /critical.scss/,
-            loader: criticalCSS.extract({
-                use: [
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            minimize: true,
-                            importLoaders: 1
-                        }
-                    },
-                    {loader: 'postcss-loader'}
-                ]
-            })
+            use: [
+                {
+                    loader: ExtractTextPlugin.loader,
+                    options: {publicPath: '/'}
+                },
+                {
+                    loader: 'css-loader',
+                    options: {
+                        minimize: true,
+                        importLoaders: 1
+                    }
+                },
+                {loader: 'postcss-loader'}
+            ]
         },
         {
             enforce: 'post',
             test: /main.scss/,
-            loader: mainCSS.extract({
-                use: [
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            minimize: true,
-                            importLoaders: 1
-                        }
-                    },
-                    {loader: 'postcss-loader'}
-                ]
-            })
+            use: [
+                {
+                    loader: ExtractTextPlugin.loader,
+                    options: {publicPath: '/'}
+                },
+                {
+                    loader: 'css-loader',
+                    options: {
+                        minimize: true,
+                        importLoaders: 1
+                    }
+                },
+                {loader: 'postcss-loader'}
+            ]
         }
     ];
 
@@ -179,7 +176,7 @@ const getRules = (env) => {
  */
 const getPlugins = (env, ssr) => {
     const pluginPack = [
-        new webpack.DefinePlugin({'process.env': {NODE_ENV: JSON.stringify(env)}}),
+        new webpack.LoaderOptionsPlugin({options: {}}),
         new StyleLintPlugin({
             fix: env !== 'development',
             configOverrides: {
@@ -211,16 +208,11 @@ const getPlugins = (env, ssr) => {
     if (env === 'development') {
         pluginPack.push(new CleanWebpackPlugin(['build']));
     } else {
-        pluginPack.push(new UglifyJsPlugin({
-            uglifyOptions: {
-                ie8: false,
-                output: {comments: false}
-            }
-        }));
+        ssr && pluginPack.push(new CleanWebpackPlugin(['dist']));
         pluginPack.push(criticalCSS);
         pluginPack.push(mainCSS);
-        pluginPack.push(new StyleExtHtmlWebpackPlugin('css/critical.css'));
         !ssr && pluginPack.push(new BundleAnalyzerPlugin());
+        ssr && pluginPack.push(new VueSSRServerPlugin());
     }
 
     return pluginPack;

@@ -1,6 +1,7 @@
 const conf = require('./webpack.shared');
 
 const dev = Object.assign(conf('development'), {
+    mode: 'development',
     devtool: 'source-map',
     devServer: {
         contentBase: 'build/',

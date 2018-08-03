@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Routes from './router';
 import Store from './store';
-import Main from './_components/main';
+import Main from './_components/main.vue';
 import {mapMutations} from 'vuex';
 import '../styles/critical.scss';
 import '../styles/main.scss';

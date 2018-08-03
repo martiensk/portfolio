@@ -3,8 +3,16 @@
  * @namespace Router
  * @author Martiens Kropff
  */
-import Terminal from './_components/terminal';
+
 import Home from './_components/home';
+
+/**
+ * Dynamically imports Terminal component. This will cause it to be laxy-loaded by webpack.
+ * @namespace Router
+ * @author Martiens Kropff
+ * @returns {void}
+ */
+const Terminal = () => { return import('./_components/terminal'); };
 
 export default [
     {
